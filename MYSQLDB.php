@@ -61,11 +61,10 @@ class MySQLDB{
 
     public function insert($table, $data) {
         $columns = implode(", ", array_keys($data));
-        $values = implode(", :", array_keys($data));
-        $params = ":" . implode(", :", array_keys($data));
-
+        $values = ":".implode(", :", array_keys($data));
+        
         $sql = "INSERT INTO $table ($columns) VALUES ($values)";
-
+        
         try {
             $stmt = $this->connection->prepare($sql);
             $stmt->execute($data);
@@ -89,22 +88,3 @@ class MySQLDB{
         }
     }
 }
-
-// // Example usage:
-// $db = new PostgreSQLDB('localhost', '5432', 'mydb', 'myuser', 'mypassword');
-
-// // Create a new table
-// $db->createTable('users', 'id SERIAL PRIMARY KEY, name VARCHAR(100), email VARCHAR(100)');
-
-// // Insert a new row
-// $data = [
-//     'name' => 'John Doe',
-//     'email' => 'john@example.com'
-// ];
-// $db->insert('users', $data);
-
-// // Select all rows from the table
-// $results = $db->select('users');
-// foreach ($results as $row) {
-//     echo $row['name'] . ', ' . $row['email'] . '\n';
-// }
